@@ -1,14 +1,10 @@
 package com.example.dogs.view.dogList.viewmodel
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.dogs.Util.App
 import com.example.dogs.networkcalls.DogApiService
 import com.example.dogs.repository.DataRepo
-import com.example.dogs.roomdb.DogDatabase
 import com.example.dogs.util.isNetworkAvailable
 import com.example.dogs.model.DogBreed
 import kotlinx.coroutines.CoroutineScope
@@ -29,10 +25,9 @@ class ListViewModel(): ViewModel() {
     val dataavalalbe = MutableLiveData<Int>()
 
 
-    fun refresh() {
-        internetAval.value=isNetworkAvailable(App.getAppContext())
+    fun refresh(isNetwok: Boolean) {
         CoroutineScope(IO).launch {
-            if(internetAval.value==true){
+            if(isNetwok==true){
                 fetchFromRemote()
             }
             else{
@@ -65,12 +60,11 @@ class ListViewModel(): ViewModel() {
 
 
 
-    private fun storeDogsLocally(list: List<DogBreed>) {
-        CoroutineScope(IO).launch {
+  private suspend fun storeDogsLocally(list: List<DogBreed>) {
             DogRepo.deleteAllDogs()
             DogRepo.insetAllDogs(list)
             dogsRetrieved(DogRepo.getAllDogs())
-        }
+
     }
 
 

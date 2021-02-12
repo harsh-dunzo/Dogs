@@ -9,15 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogs.R
+import com.example.dogs.util.isNetworkAvailable
+import com.example.dogs.view.DogList.`interface`.NetworkAvaliable
 import com.example.dogs.view.dogList.adapters.DogListAdapter
 import com.example.dogs.view.dogList.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(),NetworkAvaliable {
 
     private lateinit var viewmodel: ListViewModel
     private val dogsListAdapter = DogListAdapter(arrayListOf())
+    private var isNetwok:Boolean=false;
 
 
     override fun onCreateView(
@@ -30,7 +33,8 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewmodel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        viewmodel.refresh()
+        viewmodel.refresh(isNetwok)
+
 
         dogsList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -41,7 +45,7 @@ class ListFragment : Fragment() {
             dogsList.visibility = View.INVISIBLE
             listError.visibility = View.GONE
             LoadingView.visibility = View.VISIBLE
-            viewmodel.refresh()
+            viewmodel.refresh(isNetwok)
             refreshlayout.isRefreshing = false
         }
 
@@ -73,6 +77,11 @@ class ListFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun checkNetwork(): Boolean {
+        isNetwok= isNetworkAvailable(context)
+       return isNetwok
     }
 
 

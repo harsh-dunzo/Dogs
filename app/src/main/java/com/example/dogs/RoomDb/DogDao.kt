@@ -2,13 +2,14 @@ package com.example.dogs.roomdb
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.dogs.model.DogBreed
 
 @Dao
 interface DogDao {
-    @Insert
-    suspend fun insertAll(vararg dogs: DogBreed):List<Long>
+    @Insert(onConflict=OnConflictStrategy.REPLACE)
+    suspend fun insertAll(dogs:List<DogBreed>):List<Long>
 
     @Query("Select * from dogbreed")
     suspend fun getAllDogs():List<DogBreed>

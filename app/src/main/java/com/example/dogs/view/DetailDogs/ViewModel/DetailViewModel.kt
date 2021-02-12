@@ -19,10 +19,7 @@ class DetailViewModel():ViewModel() {
     fun fetch(uuid: Int){
         CoroutineScope(IO).launch{
             val dogBreed = DogRepo.getDog(uuid)
-            dogDetails?.postValue(dogBreed)
+            dogDetails.postValue(dogBreed)
         }
     }
-
-
-
 }

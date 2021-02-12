@@ -21,7 +21,6 @@ class DetailFragment : Fragment() {
 
     private var dogUuid=0
     private lateinit var viewmodel: DetailViewModel
-    private var dogBreed:DogBreed?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +36,10 @@ class DetailFragment : Fragment() {
         viewmodel=ViewModelProviders.of(this).get(DetailViewModel::class.java)
         arguments?.let {
             dogUuid= DetailFragmentArgs.fromBundle(it).dogUuid
-
+            viewmodel.fetch(dogUuid)
         }
-        viewmodel.fetch(dogUuid)
         observeViewModel()
 
-        
     }
 
     private fun observeViewModel() {
@@ -53,9 +50,8 @@ class DetailFragment : Fragment() {
               doglifespan.text=dogDetail.lifespan
               dogPurpose.text=dogDetail.bredfor
               dogTemperament.text=dogDetail.temperament
-              Log.d("DetailF",dogDetail.imageUrl.toString())
               context?.let {
-                  dogImage?.loadImage(dogDetail?.imageUrl, getProgressDrawable(it))
+                  dogImage.loadImage(dogDetail.imageUrl, getProgressDrawable(it))
               }
           }
 

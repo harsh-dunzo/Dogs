@@ -20,7 +20,7 @@ class DataRepo(){
     }
 
     suspend fun insetAllDogs(list:List<DogBreed>) {
-        dogDao.insertAll(*list.toTypedArray())
+        dogDao.insertAll(list)
     }
 
     suspend fun getAllDogs(): List<DogBreed> {

@@ -26,7 +26,7 @@
         android:layout_below="@+id/dogImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Dog Name"
+        tools:text="Dog Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dogImage" />
@@ -39,7 +39,7 @@
         android:layout_below="@+id/dogName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
-        android:text="Dog Name"
+        tools:text="Dog Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dogTemperament" />
@@ -52,7 +52,7 @@
         android:layout_below="@+id/dogPurpose"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
-        android:text="Dog Temperament"
+        tools:text="Dog Temperament"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/doglifespan" />
@@ -65,7 +65,7 @@
         android:layout_below="@+id/dogTemperament"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
-        android:text="Dog Lifespan"
+        tools:text="Dog Lifespan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dogName" />

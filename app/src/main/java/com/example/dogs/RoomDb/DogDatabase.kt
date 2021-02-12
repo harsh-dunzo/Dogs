@@ -13,6 +13,7 @@ abstract class DogDatabase: RoomDatabase() {
     abstract fun DogDao():DogDao
 
     companion object{
+
         private lateinit var instance:DogDatabase
 
         @JvmStatic
@@ -27,6 +28,23 @@ abstract class DogDatabase: RoomDatabase() {
                 }
             }
             return instance
+        }
+
+
+        fun initDB(context: Context) {
+            if(::instance.isInitialized.not()){
+                synchronized(DogDatabase::class.java){
+                    instance=Room.databaseBuilder(
+                        context,
+                        DogDatabase::class.java,
+                        "dogbatabase"
+                    ).build()
+                }
+            }
+        }
+
+        fun getDb():DogDatabase{
+            return instance;
         }
 
     }

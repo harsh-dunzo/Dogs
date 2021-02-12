@@ -7,11 +7,10 @@ import com.example.dogs.roomdb.DogDatabase
 
 object DoaHelper{
 
-    private var DogDao:DogDao = DogDatabase.getDatabase(App.getAppContext()).DogDao()
+    private var DogDao:DogDao = DogDatabase.getDb().DogDao()
 
     fun getDoa() : DogDao {
         return DogDao;
-
     }
 
 }
