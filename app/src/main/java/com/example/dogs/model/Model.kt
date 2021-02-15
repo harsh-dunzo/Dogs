@@ -9,7 +9,7 @@ data class DogBreed(
     @SerializedName("id")
     val breedId: String?,
     @SerializedName("name")
-    val dogBreed: String?,
+    val dogbreed: String?,
     @SerializedName("life_span")
     val lifespan: String?,
     @SerializedName("breed_group")

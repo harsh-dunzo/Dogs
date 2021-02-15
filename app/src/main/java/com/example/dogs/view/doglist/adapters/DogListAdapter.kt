@@ -30,7 +30,7 @@ class DogListAdapter(val dogsList:ArrayList<DogBreed>):RecyclerView.Adapter<DogL
     }
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-        holder.view.name.text=dogsList[position].dogBreed
+        holder.view.name.text=dogsList[position].dogbreed
         holder.view.lifespan.text=dogsList[position].lifespan
         holder.view.setOnClickListener {
             val uuid = dogsList[position].uuid.toString().toInt()

@@ -1,8 +1,7 @@
 package com.example.dogs.repository
 
-import com.example.dogs.RoomDb.DoaHelper
+import com.example.dogs.roomdb.DoaHelper
 import com.example.dogs.roomdb.DogDao
-import com.example.dogs.roomdb.DogDatabase
 import com.example.dogs.model.DogBreed
 
 

@@ -5,19 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dogs.networkcalls.DogApiService
 import com.example.dogs.repository.DataRepo
-import com.example.dogs.util.isNetworkAvailable
 import com.example.dogs.model.DogBreed
+import com.example.dogs.view.doglist.interfaces.NetworkAvaliable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class ListViewModel(): ViewModel() {
 
-
-
-
-    private val dogService = DogApiService()
-    private val DogRepo = DataRepo()
+    private val dogRepo = DataRepo()
     val dogs = MutableLiveData<List<DogBreed>>()
     val dogsLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
@@ -25,45 +21,42 @@ class ListViewModel(): ViewModel() {
     val dataavalalbe = MutableLiveData<Int>()
 
 
-    fun refresh(isNetwok: Boolean) {
+    fun refresh(networkAvaliable: NetworkAvaliable) {
+        loading.postValue(true)
         CoroutineScope(IO).launch {
-            if(isNetwok==true){
+            if(networkAvaliable.checkNetwork()){
                 fetchFromRemote()
             }
             else{
                 fetchFromDatabase()
             }
-
         }
     }
 
     private suspend fun fetchFromRemote() {
         Log.d("ListView","Intenet Avalable")
-        storeDogsLocally(dogService.getDogs())
-   //     Toast.makeText(getApplication(), "Dogs retrieved from endpoint", Toast.LENGTH_SHORT).show()
+        storeDogsLocally(DogApiService.getDogs())
 
     }
 
     private suspend fun fetchFromDatabase() {
         loading.postValue( true)
-            dataavalalbe.postValue(DogRepo.getAllDogCount())
+            dataavalalbe.postValue(dogRepo.getAllDogCount())
             if(dataavalalbe.value==0){
                 loading.postValue(false)
                 dogsLoadError.postValue(true)
             }else {
-                val dogs = DogRepo.getAllDogs()
+                val dogs = dogRepo.getAllDogs()
                 dogsRetrieved(dogs)
             }
-
-//        Toast.makeText(getApplication(), "Dogs retrieved from database", Toast.LENGTH_SHORT).show()
     }
 
 
 
   private suspend fun storeDogsLocally(list: List<DogBreed>) {
-            DogRepo.deleteAllDogs()
-            DogRepo.insetAllDogs(list)
-            dogsRetrieved(DogRepo.getAllDogs())
+            dogRepo.deleteAllDogs()
+            dogRepo.insetAllDogs(list)
+            dogsRetrieved(dogRepo.getAllDogs())
 
     }
 

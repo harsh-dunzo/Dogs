@@ -1,7 +1,6 @@
 package com.example.dogs.view.detaildogs
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.dogs.R
 import com.example.dogs.util.getProgressDrawable
 import com.example.dogs.util.loadImage
-import com.example.dogs.model.DogBreed
 import com.example.dogs.view.detaildogs.ViewModel.DetailViewModel
 
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -46,7 +44,7 @@ class DetailFragment : Fragment() {
 
         viewmodel.dogDetails.observe(viewLifecycleOwner, Observer { dogDetail ->
           dogDetail?.let {
-              dogName.text=dogDetail.dogBreed
+              dogName.text=dogDetail.dogbreed
               doglifespan.text=dogDetail.lifespan
               dogPurpose.text=dogDetail.bredfor
               dogTemperament.text=dogDetail.temperament
