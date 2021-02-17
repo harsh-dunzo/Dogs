@@ -12,7 +12,8 @@ import com.example.dogs.R
 import com.example.dogs.util.isNetworkAvailable
 import com.example.dogs.view.dogList.adapters.DogListAdapter
 import com.example.dogs.view.dogList.viewmodel.ListViewModel
-import com.example.dogs.view.doglist.interfaces.NetworkAvaliable
+import com.example.dogs.view.doglist.inter.NetworkAvaliable
+
 import kotlinx.android.synthetic.main.fragment_list.*
 
 
@@ -31,8 +32,7 @@ class ListFragment : Fragment(), NetworkAvaliable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewmodel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        viewmodel.refresh(this)
-
+        viewmodel.getData(this)
 
         dogsList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -43,43 +43,44 @@ class ListFragment : Fragment(), NetworkAvaliable {
             dogsList.visibility = View.INVISIBLE
             listError.visibility = View.GONE
             LoadingView.visibility = View.VISIBLE
-            viewmodel.refresh(this)
+            viewmodel.getData(this)
             refreshlayout.isRefreshing = false
         }
         observeViewModel()
 
-
     }
 
     private fun observeViewModel() {
-        viewmodel.dogs.observe(viewLifecycleOwner, Observer { dogs ->
-            dogs?.let {
+
+        viewmodel.getDogobj().observe(viewLifecycleOwner, Observer { dogs ->
+            dogs.dogList?.let {
                 dogsList.visibility = View.VISIBLE
-                dogsListAdapter.updateDogList(dogs)
+                dogsListAdapter.updateDogList(it)
             }
 
-        })
-
-        viewmodel.dogsLoadError.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
+            dogs.dogError?.let { error->
                 listError.visibility = if (error) View.VISIBLE else View.GONE
             }
-        })
 
-        viewmodel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            loading?.let {
-                LoadingView.visibility = if (loading) View.VISIBLE else View.GONE
-                if (loading) {
-                    listError.visibility = View.GONE
-                    dogsList.visibility = View.GONE
+            dogs.dogLoading?.let { loading->
+                loading?.let {
+                    LoadingView.visibility = if (loading) View.VISIBLE else View.GONE
+                    if (loading) {
+                        listError.visibility = View.GONE
+                        dogsList.visibility = View.GONE
+                    }
                 }
             }
+
+
         })
     }
 
     override fun checkNetwork(): Boolean {
         return isNetworkAvailable(context)
     }
+
+
 }
 
 

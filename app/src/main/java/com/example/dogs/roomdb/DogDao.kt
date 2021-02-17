@@ -9,17 +9,17 @@ import com.example.dogs.model.DogBreed
 @Dao
 interface DogDao {
     @Insert(onConflict=OnConflictStrategy.REPLACE)
-    suspend fun insertAll(dogs:List<DogBreed>):List<Long>
+     fun insertAll(dogs:List<DogBreed>):List<Long>
 
     @Query("Select * from dogbreed")
-    suspend fun getAllDogs():List<DogBreed>
+     fun getAllDogs():List<DogBreed>
 
     @Query("Select Count(*) from dogbreed")
-    suspend fun getAllDogCount():Int
+     fun getAllDogCount():Int
 
     @Query("Select * from dogbreed where uuid =:dogId")
-    suspend fun getDog(dogId:Int):DogBreed
+     fun getDog(dogId:Int):DogBreed
 
     @Query("Delete from dogbreed")
-    suspend fun deleteAllDogs()
+     fun deleteAllDogs()
 }

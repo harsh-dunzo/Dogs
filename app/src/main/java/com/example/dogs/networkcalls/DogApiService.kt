@@ -1,11 +1,12 @@
                                                                                                                                                                                                                                                                                                 package com.example.dogs.networkcalls
 
 import com.example.dogs.model.DogBreed
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object DogApiService {
+class DogApiService {
 
     private val BASEURL="https://raw.githubusercontent.com/"
 
@@ -16,7 +17,7 @@ object DogApiService {
         .create(DogsApi::class.java)
 
 
-    suspend fun getDogs():List<DogBreed>{
+      fun getDogs(): Call<List<DogBreed>> {
         return api.getDogs()
     }
 }
