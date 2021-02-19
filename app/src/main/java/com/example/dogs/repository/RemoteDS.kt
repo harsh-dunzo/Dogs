@@ -8,19 +8,18 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
-object remoteDs {
+object RemoteDS {
 
 
      fun DogList(){
+
           DogApiService().getDogs().enqueue(object :retrofit2.Callback<List<DogBreed>>{
                override fun onResponse(
                     call: Call<List<DogBreed>>,
                     response: Response<List<DogBreed>>
                ) {
-                    DataRepo.gotResponse.dogList=response.body()
-                    DataRepo.gotResponse.dogLoading=false
-                    DataRepo.response.postValue(DataRepo.gotResponse)
-
+                    DataRepo.getResponse().dogList=response.body()
+                    DataRepo.getResponse().dogLoading=false
                }
 
                override fun onFailure(call: Call<List<DogBreed>>, t: Throwable) {
@@ -28,6 +27,8 @@ object remoteDs {
 
 
           })
+
+
 
      }
 

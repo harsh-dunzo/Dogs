@@ -9,18 +9,17 @@ import kotlinx.coroutines.launch
 class ListViewModel() : ViewModel() {
 
 
-    private val dogobj= DataRepo.response
+    private val dogobj= DataRepo.response()
 
     fun getDogobj()=dogobj
 
     fun getData(listFragment: ListFragment) {
-        DataRepo.gotResponse.internetAvaliable=listFragment.checkNetwork()
+
+        DataRepo.getResponse().internetAvaliable=listFragment.checkNetwork()
         viewModelScope.launch {
             DataRepo.fetchData()
         }
     }
-
-
 }
 
 

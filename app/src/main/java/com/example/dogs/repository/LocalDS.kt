@@ -4,7 +4,7 @@ import com.example.dogs.model.DogBreed
 import com.example.dogs.roomdb.DoaHelper
 import com.example.dogs.roomdb.DogDao
 
-class LocalDs {
+class LocalDS {
 
     private var dogDao: DogDao = DoaHelper.getDoa()
 
