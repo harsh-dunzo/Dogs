@@ -12,42 +12,43 @@ object DataRepo {
 
     private val localDs = LocalDS()
     private var dataavalalbe: Int = 0
-    private val gotResponse = HomePageResponse()
-    private val response = MutableLiveData<HomePageResponse>()
+    private val homepageResponseState = HomePageResponse()
+    private val responseLiveData = MutableLiveData<HomePageResponse>()
 
     fun changeState(res:HomePageResponse){
-        response.postValue(res)
+        responseLiveData.postValue(res)
     }
 
-    fun getResponse() = gotResponse
-    fun response()= response
+    fun getResponse() = homepageResponseState
+    fun response()= responseLiveData
 
     fun fetchData() {
-        if (gotResponse.internetAvaliable == true) {
+        if (homepageResponseState.internetAvaliable == true) {
             fetchFromRemote()
         } else {
             fetchFromDatabase()
         }
     }
 
-
     private fun fetchFromRemote() {
-        gotResponse.dogLoading = true
-        changeState(gotResponse)
-        RemoteDS.DogList()
-        gotResponse.dogList?.let { storeDogsLocally(it) }
-
+        homepageResponseState.dogLoading = true
+        changeState(homepageResponseState)
+        CoroutineScope(IO).launch {
+            homepageResponseState.dogList = RemoteDS.DogList()
+        }
+        homepageResponseState.dogList?.let { storeDogsLocally(it) }
     }
 
+
     private fun fetchFromDatabase() {
-        gotResponse.dogLoading = true
-        changeState(gotResponse)
+        homepageResponseState.dogLoading = true
+        changeState(homepageResponseState)
         CoroutineScope(IO).launch {
             dataavalalbe = localDs.getAllDogCount()
             if (dataavalalbe == 0) {
-                gotResponse.dogLoading = false;
-                gotResponse.dogError = true;
-                changeState(gotResponse)
+                homepageResponseState.dogLoading = false;
+                homepageResponseState.dogError = true;
+                changeState(homepageResponseState)
             } else {
                 val dogs = localDs.getAllDogs()
                 dogsRetrieved(dogs)
@@ -65,10 +66,10 @@ object DataRepo {
     }
 
     private fun dogsRetrieved(list: List<DogBreed>) {
-        gotResponse.dogList = list
-        gotResponse.dogLoading = false
-        gotResponse.dogError = false
-        changeState(gotResponse)
+        homepageResponseState.dogList = list
+        homepageResponseState.dogLoading = false
+        homepageResponseState.dogError = false
+        changeState(homepageResponseState)
     }
 
 

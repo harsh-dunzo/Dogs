@@ -11,25 +11,8 @@ import retrofit2.Response
 object RemoteDS {
 
 
-     fun DogList(){
-
-          DogApiService().getDogs().enqueue(object :retrofit2.Callback<List<DogBreed>>{
-               override fun onResponse(
-                    call: Call<List<DogBreed>>,
-                    response: Response<List<DogBreed>>
-               ) {
-                    DataRepo.getResponse().dogList=response.body()
-                    DataRepo.getResponse().dogLoading=false
-               }
-
-               override fun onFailure(call: Call<List<DogBreed>>, t: Throwable) {
-               }
-
-
-          })
-
-
-
+     suspend fun DogList(): List<DogBreed> {
+          return DogApiService().getDogs()
      }
 
 

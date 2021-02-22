@@ -1,10 +1,15 @@
 package com.example.dogs.util
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.view.View
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -65,3 +70,11 @@ fun isNetworkAvailable(context: Context?): Boolean {
 
     return false
 }
+
+
+fun View.setBackgroundDrawableColor(parsedColor: Int) {
+    (background as? GradientDrawable)?.apply {
+        setColor(parsedColor)
+    }
+}
+

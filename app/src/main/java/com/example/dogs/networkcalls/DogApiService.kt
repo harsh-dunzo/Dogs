@@ -17,7 +17,7 @@ class DogApiService {
         .create(DogsApi::class.java)
 
 
-      fun getDogs(): Call<List<DogBreed>> {
+     suspend fun getDogs(): List<DogBreed> {
         return api.getDogs()
     }
 }
