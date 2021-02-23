@@ -13,8 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dogs">
         <activity android:name=".view.MainActivity"
-
-
+            android:screenOrientation="portrait"
             >
 
             <intent-filter>
