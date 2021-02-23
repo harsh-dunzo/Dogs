@@ -14,8 +14,6 @@
         android:theme="@style/Theme.Dogs">
         <activity android:name=".view.MainActivity"
 
-            android:screenOrientation="portrait"
-            android:configChanges="orientation"
 
             >
 

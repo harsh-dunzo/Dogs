@@ -1,4 +1,4 @@
-package com.example.dogs.view.doglist.inter
+package com.example.dogs.interfaces
 
 interface NetworkAvaliable {
     fun checkNetwork():Boolean

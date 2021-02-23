@@ -71,7 +71,6 @@ class DogListAdapter(val dogsList:ArrayList<DogBreed>):RecyclerView.Adapter<DogL
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
-                    TODO("Not yet implemented")
                 }
 
             })

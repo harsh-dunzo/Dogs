@@ -11,7 +11,7 @@ import retrofit2.Response
 object RemoteDS {
 
 
-     suspend fun DogList(): List<DogBreed> {
+     suspend fun dogList(): List<DogBreed> {
           return DogApiService().getDogs()
      }
 

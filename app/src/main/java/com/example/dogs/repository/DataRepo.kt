@@ -34,9 +34,9 @@ object DataRepo {
         homepageResponseState.dogLoading = true
         changeState(homepageResponseState)
         CoroutineScope(IO).launch {
-            homepageResponseState.dogList = RemoteDS.DogList()
+            homepageResponseState.dogList = RemoteDS.dogList()
+            homepageResponseState.dogList?.let { storeDogsLocally(it) }
         }
-        homepageResponseState.dogList?.let { storeDogsLocally(it) }
     }
 
 

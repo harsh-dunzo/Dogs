@@ -12,7 +12,7 @@ import com.example.dogs.R
 import com.example.dogs.util.isNetworkAvailable
 import com.example.dogs.view.dogList.adapters.DogListAdapter
 import com.example.dogs.view.dogList.viewmodel.ListViewModel
-import com.example.dogs.view.doglist.inter.NetworkAvaliable
+import com.example.dogs.interfaces.NetworkAvaliable
 
 
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -64,7 +64,13 @@ class ListFragment : Fragment(), NetworkAvaliable {
 
             dogs.dogLoading?.let { loading->
                 loading?.let {
-                    shimmerLayout.visibility = if (loading) View.VISIBLE else View.GONE
+                    shimmerLayout.visibility = if (loading){
+                        shimmerLayout.startShimmerAnimation()
+                        View.VISIBLE
+                    } else {
+                        shimmerLayout.stopShimmerAnimation()
+                        View.GONE
+                    }
                     if (loading) {
                         listError.visibility = View.GONE
                         dogsList.visibility = View.GONE
@@ -80,15 +86,8 @@ class ListFragment : Fragment(), NetworkAvaliable {
         return isNetworkAvailable(context)
     }
 
-    override fun onPause() {
-        super.onPause()
-        shimmerLayout.stopShimmerAnimation()
-    }
-
     override fun onResume() {
         super.onResume()
-        shimmerLayout.startShimmerAnimation()
-        shimmerLayout.visibility=View.GONE
     }
 }
 
